@@ -38,7 +38,7 @@ abstract class OmnipayableForm extends Form
 
         $paymentFormClass = "OmnipayableForm_{$gateway}";
 
-        if(!class_exists($paymentFormClass)) {
+        if (!class_exists($paymentFormClass)) {
             user_error('There is no OmnipayableForm implemented for the currently configured gateway.', E_USER_ERROR);
         }
 
@@ -125,8 +125,7 @@ abstract class OmnipayableForm extends Form
                 $this->sessionMessage(_t('Omnipayable.FAILURE', '{message}', array('message' => $response->getMessage())), 'bad');
                 $this->extend('onPaymentFailure');
             }
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             // Log any errors and present a user friendly message
             SS_Log::log($exception, SS_Log::ERR);
             $this->sessionMessage(_t('Omnipayable.ERROR', 'There was an error processing your payment. Please try agian later.'), 'bad');
@@ -159,8 +158,7 @@ abstract class OmnipayableForm extends Form
                 $this->sessionMessage(_t('Omnipayable.FAILURE', '{message}', array('message' => $response->getMessage())), 'bad');
                 $this->extend('onPaymentFailure');
             }
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             // Log any errors and present a user friendly message
             SS_Log::log($exception, SS_Log::ERR);
             $this->sessionMessage(_t('Omnipayable.ERROR', 'There was an error processing your payment. Please try agian later.'), 'bad');
@@ -227,7 +225,7 @@ abstract class OmnipayableForm extends Form
         $currentYear = date('Y');
         $endOfRangeYear = $currentYear + $range;
 
-        if($currentYear < $endOfRangeYear) {
+        if ($currentYear < $endOfRangeYear) {
             $endOfRangeYear--;
             for ($year = $endOfRangeYear; $year >= $currentYear; $year--) {
                 $years[$year] = $year;
@@ -457,7 +455,9 @@ abstract class OmnipayableForm extends Form
 
         foreach ($creditCardFields as $fieldName => $field) {
             // If there is no value for this field then skip
-            if(!isset($data[$fieldName])) continue;
+            if (!isset($data[$fieldName])) {
+                continue;
+            }
             // Process the field value through the form field
             $field->setValue($data[$fieldName]);
             $creditCardData[$fieldName] = $field->dataValue();
